@@ -3,18 +3,18 @@ services:
     - docker
 
 before_install:
-    - docker build -t austinnchristensen/react-test -f ./client/Dockerfile.dev ./client
+    - docker build -t enmotus/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true austinnchristensen/react-test npm test
+    - docker run -e CI=true enmotus/react-test npm test
 
 after_success:
-    - docker build -t austinnchristensen/multi-client ./client
-    - docker build -t austinnchristensen/multi-nginx ./nginx
-    - docker build -t austinnchristensen/multi-server ./server
-    - docker build -t austinnchristensen/mutli-worker ./worker
+    - docker build -t enmotus/multi-client ./client
+    - docker build -t enmotus/multi-nginx ./nginx
+    - docker build -t enmotus/multi-server ./server
+    - docker build -t enmotus/multi-worker ./worker
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-    - docker push austinnchristensen/multi-client
-    - docker push austinnchristensen/multi-nginx
-    - docker push austinnchristensen/multi-server
-    - docker push austinnchristensen/multi-worker
+    - docker push enmotus/multi-client
+    - docker push enmotus/multi-nginx
+    - docker push enmotus/multi-server
+    - docker push enmotus/multi-worker
