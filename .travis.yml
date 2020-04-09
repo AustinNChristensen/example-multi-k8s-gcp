@@ -1,6 +1,12 @@
 sudo: required
 services:
 - docker
+
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv
   -in service-account.json.enc -out service-account.json -d
@@ -8,11 +14,17 @@ before_install:
 - source $HOME/google-cloud-sdk/path.bash.inc
 - gcloud components update kubectl
 - gcloud auth activate-service-account --key-file service-account.json
-- gloud config set project example-k8s-273713
-- gloud config set compute/zone us-central1-a
+- gcloud config set project example-k8s-273713
+- gcloud config set compute/zone us-central1-a
 - gcloud container clusters get-credentials example-multi-cluster
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker build -t react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true enmotus/react-test npm run test
+
+deploy:
+  provider: script
+  script: bash ./scripts/deploy-k8s.sh
+  on:
+    branch: master
