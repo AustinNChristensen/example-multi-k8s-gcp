@@ -18,7 +18,7 @@ before_install:
 - gcloud config set compute/zone us-central1-a
 - gcloud container clusters get-credentials example-multi-cluster
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-- docker build -t react-test -f ./client/Dockerfile.dev ./client
+- docker build -t enmotus/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true enmotus/react-test npm run test
