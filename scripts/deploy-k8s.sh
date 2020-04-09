@@ -11,8 +11,8 @@ docker push enmotus/multi-server:latest
 docker push enmotus/multi-worker:$SHA
 docker push enmotus/multi-worker:latest
 
-kubectl apply -f ./k8s
+# kubectl apply -f ./k8s
 
-kubectl set image deployments/client-deployment client=enmotus/multi-client:$SHA
-kubectl set image deployments/server-deployment server=enmotus/multi-server:$SHA
-kubectl set image deployments/worker-deployment worker=enmotus/multi-worker:$SHA
+# kubectl set image deployments/client-deployment client=enmotus/multi-client:$SHA
+# kubectl set image deployments/server-deployment server=enmotus/multi-server:$SHA
+# kubectl set image deployments/worker-deployment worker=enmotus/multi-worker:$SHA
